@@ -1,6 +1,5 @@
 import recap
-from social import bluesky
-
+import bluesky
 import flask
 import functions_framework
 
