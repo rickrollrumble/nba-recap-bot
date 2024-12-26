@@ -26,6 +26,9 @@ def publish(post_text=None, recap_date=None, post_image=None):
         )
     ]
     text += f"\n\n{post_text}"
-    client.send_post(text=text, facets=facets)
+    try:
+        client.send_post(text=text, facets=facets)
+    except:
+        raise Exception("failed to send Bluesky post")
 
-    return
+    return None
