@@ -10,23 +10,22 @@ client.login(handle, password)
 
 
 def publish(post_text=None, recap_date=None, post_image=None):
-    post_text += "\n\n#NBASky\n#NBA"
+    text = "#NBASky #NBA"
     facets = [
         models.AppBskyRichtextFacet.Main(
-            models.AppBskyRichtextFacet.Tag(
-                tag="#NBASky",
-                index=models.AppBskyRichtextFacet.ByteSlice(
-                    byte_start=len(post_text)-12, byte_end=len(post_text) - 5)
+            features=[models.AppBskyRichtextFacet.Tag(tag="NBASky")],
+            index=models.AppBskyRichtextFacet.ByteSlice(
+                byte_start=0, byte_end=7
             )
         ),
         models.AppBskyRichtextFacet.Main(
-            models.AppBskyRichtextFacet.Tag(
-                tag="#NBA",
-                index=models.AppBskyRichtextFacet.ByteSlice(
-                    byte_start=len(post_text)-5, byte_end=len(post_text))
+            features=[models.AppBskyRichtextFacet.Tag(tag="NBA")],
+            index=models.AppBskyRichtextFacet.ByteSlice(
+                byte_start=8, byte_end=12,
             )
-        ),
+        )
     ]
+    text += f"\n\n{post_text}"
+    client.send_post(text=text, facets=facets)
 
-    client.send_post(text=post_text, facets=facets)
     return
